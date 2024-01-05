@@ -1,4 +1,4 @@
-package com.example.buscar_vuelos.ui.theme
+package com.example.pmdm_p6_buscar_vuelos.ui.theme
 
 import android.app.Activity
 import android.os.Build

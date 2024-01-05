@@ -1,9 +1,9 @@
-package com.example.buscar_vuelos.di
+package com.example.pmdm_p6_buscar_vuelos.di
 
 import android.content.Context
-import com.example.buscar_vuelos.data.FlightDatabase
-import com.example.buscar_vuelos.data.FlightRepository
-import com.example.buscar_vuelos.data.OfflineFlightRepository
+import com.example.pmdm_p6_buscar_vuelos.data.FlightDatabase
+import com.example.pmdm_p6_buscar_vuelos.data.FlightRepository
+import com.example.pmdm_p6_buscar_vuelos.data.OfflineFlightRepository
 
 /**
  * App container for Dependency injection.
@@ -15,7 +15,7 @@ interface AppContainer {
 /**
  * [AppContainer] implementation that provides instance of [OfflineFlightRepository]
  */
-class AppDataContainer(
+class AppDataContainer (
     private val context: Context
 ) : AppContainer {
     /**

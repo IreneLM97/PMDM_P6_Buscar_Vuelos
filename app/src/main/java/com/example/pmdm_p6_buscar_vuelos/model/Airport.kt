@@ -1,4 +1,4 @@
-package com.example.buscar_vuelos.model
+package com.example.pmdm_p6_buscar_vuelos.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

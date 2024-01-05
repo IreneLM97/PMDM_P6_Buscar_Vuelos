@@ -1,4 +1,4 @@
-package com.example.buscar_vuelos
+package com.example.pmdm_p6_buscar_vuelos
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

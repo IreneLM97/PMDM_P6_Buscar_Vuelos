@@ -1,4 +1,4 @@
-package com.example.buscar_vuelos
+package com.example.pmdm_p6_buscar_vuelos
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,8 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.buscar_vuelos.ui.theme.PMDM_P6_Buscar_VuelosTheme
+import com.example.pmdm_p6_buscar_vuelos.ui.theme.PMDM_P6_Buscar_VuelosTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,12 +34,4 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         text = "Hello $name!",
         modifier = modifier
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PMDM_P6_Buscar_VuelosTheme {
-        Greeting("Android")
-    }
 }

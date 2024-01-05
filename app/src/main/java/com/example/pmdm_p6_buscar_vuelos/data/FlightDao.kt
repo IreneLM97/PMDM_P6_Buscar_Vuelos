@@ -1,12 +1,12 @@
-package com.example.buscar_vuelos.data
+package com.example.pmdm_p6_buscar_vuelos.data
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.buscar_vuelos.model.Airport
-import com.example.buscar_vuelos.model.Favorite
+import com.example.pmdm_p6_buscar_vuelos.model.Airport
+import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 import kotlinx.coroutines.flow.Flow
 
 @Dao

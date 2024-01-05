@@ -1,4 +1,4 @@
-package com.example.buscar_vuelos
+package com.example.pmdm_p6_buscar_vuelos
 
 import org.junit.Test
 

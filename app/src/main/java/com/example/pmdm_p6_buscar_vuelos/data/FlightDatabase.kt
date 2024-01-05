@@ -1,11 +1,11 @@
-package com.example.buscar_vuelos.data
+package com.example.pmdm_p6_buscar_vuelos.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.buscar_vuelos.model.Airport
-import com.example.buscar_vuelos.model.Favorite
+import com.example.pmdm_p6_buscar_vuelos.model.Airport
+import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 
 @Database(entities = [Airport::class, Favorite::class], version = 1, exportSchema = false)
 abstract class FlightDatabase : RoomDatabase() {

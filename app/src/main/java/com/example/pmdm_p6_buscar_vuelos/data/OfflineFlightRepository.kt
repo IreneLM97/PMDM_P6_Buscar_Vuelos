@@ -1,7 +1,7 @@
-package com.example.buscar_vuelos.data
+package com.example.pmdm_p6_buscar_vuelos.data
 
-import com.example.buscar_vuelos.model.Airport
-import com.example.buscar_vuelos.model.Favorite
+import com.example.pmdm_p6_buscar_vuelos.model.Airport
+import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 import kotlinx.coroutines.flow.Flow
 
 class OfflineFlightRepository(

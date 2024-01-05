@@ -1,4 +1,4 @@
-package com.example.buscar_vuelos.ui.theme
+package com.example.pmdm_p6_buscar_vuelos.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
