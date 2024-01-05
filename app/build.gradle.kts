@@ -49,7 +49,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    namespace = "com.example.inventory"
+    namespace = "com.example.pmdm_p6_buscar_vuelos"
 }
 
 dependencies {
