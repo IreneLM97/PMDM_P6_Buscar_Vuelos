@@ -4,4 +4,5 @@
 
     <string name="search_label">Enter departure airport</string>
     <string name="search_icon">Search Icon</string>
+    <string name="no_favorites_yet">NO HAY FAVORITOS</string>
 </resources>
