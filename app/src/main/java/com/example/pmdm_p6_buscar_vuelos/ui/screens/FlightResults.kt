@@ -55,7 +55,7 @@ fun FlightRow(
                         airport = departureAirport
                     )
                     Text(
-                        text = stringResource(R.string.arrival_label),
+                        text = stringResource(R.string.arrive_label),
                         style = MaterialTheme.typography.titleSmall,
                         modifier = Modifier.padding(start = 32.dp)
                     )

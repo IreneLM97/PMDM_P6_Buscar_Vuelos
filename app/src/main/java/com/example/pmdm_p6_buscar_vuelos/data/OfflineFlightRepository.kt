@@ -7,12 +7,16 @@ import kotlinx.coroutines.flow.Flow
 class OfflineFlightRepository(
     private val flightDao: FlightDao
 ) : FlightRepository {
+    override suspend fun getAllAirports(): List<Airport> {
+        return flightDao.getAllAirports()
+    }
+
     override fun getAllAirports(query: String): Flow<List<Airport>> {
         return flightDao.getAllAirports(query)
     }
 
-    override fun getAirportById(id: Int): Flow<Airport> {
-        return flightDao.getAirportById(id)
+    override suspend fun getAirportByCode(code: String): Airport {
+        return flightDao.getAirportByCode(code)
     }
 
     override suspend fun getAllFavorites(): List<Favorite> {

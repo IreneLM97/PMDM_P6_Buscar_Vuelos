@@ -27,12 +27,14 @@ class SearchViewModel(
         }
     }
 
-    fun onQueryChange(searchQuery: String) {
+    fun onChangeQuery(searchQuery: String) {
         searchFromQuery(searchQuery)
         updateQuery(searchQuery)
     }
 
     private fun searchFromQuery(searchQuery: String) {
+        _uiState.update { it.copy(searchQuery = searchQuery) }
+
         if (searchQuery.isEmpty()) {
             viewModelScope.launch {
                 _uiState.update {
@@ -64,11 +66,22 @@ class SearchViewModel(
         }
     }
 
-    fun updateSelectedCode(selectedCode: String) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                selectedCode = selectedCode,
-            )
+    fun onSelectedCode(selectedCode: String) {
+        viewModelScope.launch {
+            val favoritesList = flightRepository.getAllFavorites().toMutableStateList()
+            val airportsList = flightRepository.getAllAirports()
+            _uiState.update {
+                uiState.value.copy(
+                    selectedCode = selectedCode,
+                    favoriteList = favoritesList,
+                    destinationList = airportsList,
+                    departureAirport = flightRepository.getAirportByCode(selectedCode)
+                )
+            }
         }
+    }
+
+    fun updateSelectedCode(selectedCode: String) {
+        _uiState.update { it.copy(selectedCode = selectedCode) }
     }
 }

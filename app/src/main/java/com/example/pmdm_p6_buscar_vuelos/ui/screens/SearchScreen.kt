@@ -25,7 +25,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pmdm_p6_buscar_vuelos.R
-import com.example.pmdm_p6_buscar_vuelos.model.Airport
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pmdm_p6_buscar_vuelos.ui.AppViewModelProvider
@@ -47,7 +46,7 @@ fun SearchScreen(
             uiState.searchQuery,
             onQueryChange = {
                 viewModel.updateSelectedCode("")
-                viewModel.onQueryChange(it)
+                viewModel.onChangeQuery(it)
             }
         )
 
@@ -55,9 +54,7 @@ fun SearchScreen(
         if (uiState.searchQuery.isEmpty()) {
             val favoriteList = uiState.favoriteList
 
-            if (favoriteList.isNotEmpty()){
-
-            } else {
+            if (favoriteList.isEmpty()){
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -69,6 +66,8 @@ fun SearchScreen(
                             .align(Alignment.Center)
                     )
                 }
+            } else {
+
             }
         } else {
             val airports = uiState.airportList
@@ -78,6 +77,16 @@ fun SearchScreen(
                 onSelectCode = onSelectCode
             )
         }
+    }
+    
+    // Mostramos los vuelos en función del código seleccionado
+    if(uiState.selectedCode.isNotEmpty()) {
+        FlightResults(
+            departureAirport = uiState.departureAirport,
+            destinationList = uiState.destinationList,
+            favoriteList = uiState.favoriteList,
+            onFavoriteClick = {_,_ -> }
+        )
     }
 }
 

@@ -5,6 +5,6 @@
     <string name="search_label">Enter departure airport</string>
     <string name="search_icon">Search Icon</string>
     <string name="no_favorites_yet">NO HAY FAVORITOS</string>
-    <string name="depart_label">Depart</string>
-    <string name="arrival_label">Arrival</string>
+    <string name="depart_label">DEPART</string>
+    <string name="arrive_label">ARRIVE</string>
 </resources>

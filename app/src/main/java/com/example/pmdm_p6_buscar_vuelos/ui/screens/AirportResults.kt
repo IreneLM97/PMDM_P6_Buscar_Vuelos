@@ -20,8 +20,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import com.example.pmdm_p6_buscar_vuelos.R
 import com.example.pmdm_p6_buscar_vuelos.model.Airport
+import com.example.pmdm_p6_buscar_vuelos.ui.AppViewModelProvider
 
 @Composable
 fun AirportRow(
@@ -34,11 +36,9 @@ fun AirportRow(
         modifier = modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .clickable(
-                onClick = {
-                    if (airport.code != "") onSelectCode(airport.code)
-                }
-            )
+            .clickable {
+                if (airport.code != "") onSelectCode(airport.code)
+            }
     ) {
         Text(
             text = airport.code,
