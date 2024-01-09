@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import com.example.pmdm_p6_buscar_vuelos.ui.SearchScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,8 +31,9 @@ fun FlightApp() {
     )
     {
         innerPadding ->
-        Box(
-            modifier = Modifier.padding(innerPadding)
+        SearchScreen(
+            modifier = Modifier
+                .padding(innerPadding)
         )
     }
 }

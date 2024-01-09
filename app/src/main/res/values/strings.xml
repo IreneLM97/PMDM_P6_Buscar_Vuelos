@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">PMDM_P6_Buscar_Vuelos</string>
     <string name="flight_search">Flight Search</string>
+
+    <string name="search_label">Enter departure airport</string>
+    <string name="search_icon">Search Icon</string>
 </resources>
