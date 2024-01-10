@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface FlightRepository {
     suspend fun getAllAirports(): List<Airport>
+    suspend fun getAllAirportsNoCode(code: String): List<Airport>
     fun getAllAirports(query: String): Flow<List<Airport>>
     suspend fun getAirportByCode(code: String): Airport
 

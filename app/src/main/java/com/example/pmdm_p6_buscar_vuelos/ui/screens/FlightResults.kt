@@ -26,6 +26,8 @@ import com.example.pmdm_p6_buscar_vuelos.R
 import com.example.pmdm_p6_buscar_vuelos.model.Airport
 import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun FlightRow(
@@ -48,18 +50,20 @@ fun FlightRow(
                 Column {
                     Text(
                         text = stringResource(R.string.depart_label),
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(start = 32.dp)
                     )
                     AirportRow(
+                        isClickable = false,
                         airport = departureAirport
                     )
                     Text(
                         text = stringResource(R.string.arrive_label),
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(start = 32.dp)
                     )
                     AirportRow(
+                        isClickable = false,
                         airport = destinationAirport
                     )
                 }
@@ -89,7 +93,20 @@ fun FlightResults(
     favoriteList: List<Favorite>,
     onFavoriteClick: (String, String) -> Unit
 ) {
-    Column {
+    Column(
+        modifier = Modifier
+            .padding(top = 140.dp)
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(10.dp),
+            fontWeight = FontWeight.Bold,
+            fontSize = 30.sp,
+            text = stringResource(
+                id = R.string.flights_from,
+                departureAirport.code
+            )
+        )
         LazyColumn(
             modifier = modifier
                 .padding(8.dp)

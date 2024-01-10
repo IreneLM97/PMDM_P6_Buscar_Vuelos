@@ -11,6 +11,10 @@ class OfflineFlightRepository(
         return flightDao.getAllAirports()
     }
 
+    override suspend fun getAllAirportsNoCode(code: String): List<Airport> {
+        return flightDao.getAllAirportsNoCode(code)
+    }
+
     override fun getAllAirports(query: String): Flow<List<Airport>> {
         return flightDao.getAllAirports(query)
     }

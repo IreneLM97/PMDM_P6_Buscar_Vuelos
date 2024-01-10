@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pmdm_p6_buscar_vuelos.data.FlightRepository
 import com.example.pmdm_p6_buscar_vuelos.data.UserPreferencesRepository
+import com.example.pmdm_p6_buscar_vuelos.model.Airport
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -45,7 +46,6 @@ class SearchViewModel(
             }
         } else {
             flightRepository.getAllAirports(searchQuery)
-                // on each emission
                 .onEach { result ->
                     _uiState.update {
                         uiState.value.copy(
@@ -61,18 +61,18 @@ class SearchViewModel(
         _uiState.update { it.copy(searchQuery = searchQuery) }
 
         // Actualiza preferencias del usuario
-        viewModelScope.launch {
-            userPreferencesRepository.saveUserPreferences(searchValue = searchQuery)
-        }
+        updatePreferences(searchQuery)
     }
 
     fun onSelectedCode(selectedCode: String) {
         viewModelScope.launch {
             val favoritesList = flightRepository.getAllFavorites().toMutableStateList()
-            val airportsList = flightRepository.getAllAirports()
+            val airportsList = flightRepository.getAllAirportsNoCode(selectedCode)
             _uiState.update {
                 uiState.value.copy(
+                    searchQuery = selectedCode,
                     selectedCode = selectedCode,
+                    airportList = emptyList(),
                     favoriteList = favoritesList,
                     destinationList = airportsList,
                     departureAirport = flightRepository.getAirportByCode(selectedCode)
@@ -83,5 +83,11 @@ class SearchViewModel(
 
     fun updateSelectedCode(selectedCode: String) {
         _uiState.update { it.copy(selectedCode = selectedCode) }
+    }
+
+    private fun updatePreferences(searchQuery: String) {
+        viewModelScope.launch {
+            userPreferencesRepository.saveUserPreferences(searchValue = searchQuery)
+        }
     }
 }

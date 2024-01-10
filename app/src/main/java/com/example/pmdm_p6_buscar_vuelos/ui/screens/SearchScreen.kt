@@ -74,7 +74,10 @@ fun SearchScreen(
 
             AirportResults(
                 airports = airports,
-                onSelectCode = onSelectCode
+                onSelectCode = {
+                    viewModel.updateSelectedCode(it)
+                    viewModel.onSelectedCode(it)
+                }
             )
         }
     }

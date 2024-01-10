@@ -28,6 +28,7 @@ import com.example.pmdm_p6_buscar_vuelos.ui.AppViewModelProvider
 @Composable
 fun AirportRow(
     modifier: Modifier = Modifier,
+    isClickable: Boolean = true,
     airport : Airport,
     onSelectCode: (String) -> Unit = {}
 ) {
@@ -36,7 +37,7 @@ fun AirportRow(
         modifier = modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .clickable {
+            .clickable(enabled = isClickable) {
                 if (airport.code != "") onSelectCode(airport.code)
             }
     ) {
