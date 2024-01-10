@@ -2,12 +2,9 @@ package com.example.pmdm_p6_buscar_vuelos.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -16,7 +13,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
@@ -26,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pmdm_p6_buscar_vuelos.R
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pmdm_p6_buscar_vuelos.ui.AppViewModelProvider
@@ -55,38 +50,30 @@ fun SearchScreen(
 
         val airportList = uiState.airportList
         val favoriteList = uiState.favoriteList
+        val searchQuery = uiState.searchQuery
 
         // Comprobamos si ha escrito algo o no en la caja de texto
-        if (uiState.searchQuery.isEmpty()) {
-            if (favoriteList.isEmpty()){
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(50.dp)
-                        .wrapContentSize(align = Alignment.TopCenter)
-                ) {
-                    Text(
-                        text = stringResource(R.string.no_favorites_yet),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
-            } else {
+        when {
+            searchQuery.isEmpty() && favoriteList.isEmpty() -> {
+                NoFavoritesResult()
+            }
+            searchQuery.isEmpty() -> {
                 FavoriteResults(
                     airportList = airportList,
                     favoriteList = favoriteList,
-                    onFavoriteClick = {_,_ ->}
+                    onFavoriteClick = { _, _ -> }
                 )
             }
-        } else {
-            AirportResults(
-                airports = airportList,
-                onSelectCode = {
-                    viewModel.updateSelectedCode(it)
-                    viewModel.onSelectedCode(it)
-                    focusManager.clearFocus()
-                }
-            )
+            else -> {
+                AirportResults(
+                    airports = airportList,
+                    onSelectCode = {
+                        viewModel.updateSelectedCode(it)
+                        viewModel.onSelectedCode(it)
+                        focusManager.clearFocus()
+                    }
+                )
+            }
         }
 
         // Mostramos los vuelos en función del código seleccionado

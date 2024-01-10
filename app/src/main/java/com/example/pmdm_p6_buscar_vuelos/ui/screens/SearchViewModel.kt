@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.pmdm_p6_buscar_vuelos.data.FlightRepository
 import com.example.pmdm_p6_buscar_vuelos.data.UserPreferencesRepository
 import com.example.pmdm_p6_buscar_vuelos.model.Airport
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -44,6 +45,7 @@ class SearchViewModel(
                         favoriteList = flightRepository.getAllFavorites().toMutableStateList()
                     )
                 }
+                delay(500)
             }
         } else {
             flightRepository.getAllAirports(searchQuery)

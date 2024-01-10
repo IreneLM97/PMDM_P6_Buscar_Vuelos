@@ -1,10 +1,13 @@
 package com.example.pmdm_p6_buscar_vuelos.ui.screens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -38,7 +41,8 @@ fun FavoriteResults(
     Column {
         Text(
             modifier = Modifier
-                .padding(10.dp),
+                .padding(10.dp)
+                .padding(top = 20.dp),
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
             text = stringResource(R.string.favorites_flights)
@@ -64,5 +68,21 @@ fun FavoriteResults(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun NoFavoritesResult() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(50.dp)
+            .wrapContentSize(align = Alignment.TopCenter)
+    ) {
+        Text(
+            text = stringResource(R.string.no_favorites_yet),
+            modifier = Modifier
+                .align(Alignment.Center)
+        )
     }
 }
