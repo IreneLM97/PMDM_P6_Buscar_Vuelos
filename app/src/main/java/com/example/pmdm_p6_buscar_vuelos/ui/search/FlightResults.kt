@@ -158,24 +158,6 @@ fun FlightResults(
 
 @Preview
 @Composable
-fun FlightRowPreview() {
-    FlightInfo(
-        isFavorite = true,
-        departureAirport = Airport(
-            code = "FCO",
-            name = "Leonardo da Vinci International Airport"
-        ),
-        destinationAirport = Airport(
-            code = "VIE",
-            name = "Vienna International Airport"
-        ),
-        onFavoriteClicked = { _, _ -> },
-        onSendButtonClicked = {}
-    )
-}
-
-@Preview
-@Composable
 fun FlightResultsPreview() {
     FlightResults(
         departureAirport = Airport(
