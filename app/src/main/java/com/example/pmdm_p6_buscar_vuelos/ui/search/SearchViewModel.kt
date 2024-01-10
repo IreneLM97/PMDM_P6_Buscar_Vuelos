@@ -18,6 +18,7 @@ class SearchViewModel(
     val flightRepository: FlightRepository,
     val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
+
     private val _uiState = MutableStateFlow(SearchUiState())
     val uiState = _uiState.asStateFlow()
 
@@ -29,9 +30,14 @@ class SearchViewModel(
         }
     }
 
-    fun onChangeQuery(searchQuery: String) {
+    fun onQueryChanged(searchQuery: String) {
+        // Actualiza preferencias del usuario
+        viewModelScope.launch {
+            userPreferencesRepository.saveUserPreferences(searchValue = searchQuery)
+        }
+
+        // Buscamos los vuelos a partir de la consulta introducida por el usuario
         searchFromQuery(searchQuery)
-        updateQuery(searchQuery)
     }
 
     private fun searchFromQuery(searchQuery: String) {
@@ -45,29 +51,26 @@ class SearchViewModel(
                         favoriteList = flightRepository.getAllFavorites().toMutableStateList()
                     )
                 }
-                delay(500)
+                delay(1000)
             }
         } else {
-            flightRepository.getAllAirports(searchQuery)
-                .onEach { result ->
-                    _uiState.update {
-                        uiState.value.copy(
-                            airportList = result,
-                        )
+            viewModelScope.launch {
+                flightRepository.getAllAirports(searchQuery).collect { airportList ->
+                        _uiState.update {
+                            uiState.value.copy(
+                                airportList = airportList,
+                            )
+                        }
                     }
-                }.launchIn(viewModelScope)
+            }
         }
     }
 
-    private fun updateQuery(searchQuery: String) {
-        // Actualiza el valor de la consulta en el estado
-        _uiState.update { it.copy(searchQuery = searchQuery) }
-
-        // Actualiza preferencias del usuario
-        updatePreferences(searchQuery)
+    fun updateSelectedCode(selectedCode: String) {
+        _uiState.update { it.copy(selectedCode = selectedCode) }
     }
 
-    fun onSelectedCode(selectedCode: String) {
+    fun onCodeClicked(selectedCode: String) {
         viewModelScope.launch {
             val favoritesList = flightRepository.getAllFavorites().toMutableStateList()
             val airportsList = flightRepository.getAllAirportsNoCode(selectedCode)
@@ -84,17 +87,7 @@ class SearchViewModel(
         }
     }
 
-    fun updateSelectedCode(selectedCode: String) {
-        _uiState.update { it.copy(selectedCode = selectedCode) }
-    }
-
-    private fun updatePreferences(searchQuery: String) {
-        viewModelScope.launch {
-            userPreferencesRepository.saveUserPreferences(searchValue = searchQuery)
-        }
-    }
-
-    fun onStarClick(departureCode: String, destinationCode: String) {
+    fun onFavoriteClicked(departureCode: String, destinationCode: String) {
         viewModelScope.launch {
             flightRepository.getFavoriteByInfo(departureCode, destinationCode)?.let { favorite ->
                 flightRepository.deleteFavorite(favorite)

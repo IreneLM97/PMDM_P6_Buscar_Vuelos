@@ -52,16 +52,16 @@ fun FlightApp() {
             searchUiState = uiState,
             onQueryChanged = { query ->
                 viewModel.updateSelectedCode("")
-                viewModel.onChangeQuery(query)
+                viewModel.onQueryChanged(query)
                 if(query.isEmpty()) focusManager.clearFocus()
             },
             onCodeClicked = { code ->
                 viewModel.updateSelectedCode(code)
-                viewModel.onSelectedCode(code)
+                viewModel.onCodeClicked(code)
                 focusManager.clearFocus()
             },
             onFavoriteClicked = { depCode, destCode ->
-                viewModel.onStarClick(depCode, destCode)
+                viewModel.onFavoriteClicked(depCode, destCode)
             },
             onSendButtonClicked = { summary: String ->
                 shareFlight(context, summary = summary)  // compartimos la información
