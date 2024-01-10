@@ -1,5 +1,6 @@
-package com.example.pmdm_p6_buscar_vuelos.ui.screens
+package com.example.pmdm_p6_buscar_vuelos.ui.search
 
+import android.widget.ShareActionProvider.OnShareTargetSelectedListener
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,7 @@ import com.example.pmdm_p6_buscar_vuelos.R
 import com.example.pmdm_p6_buscar_vuelos.model.Airport
 import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
@@ -36,7 +38,8 @@ fun FlightRow(
     isFavorite: Boolean = true,
     departureAirport: Airport,
     destinationAirport: Airport,
-    onFavoriteClick: (String, String) -> Unit,
+    onFavoriteClicked: (String, String) -> Unit,
+    onSendButtonClicked: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -72,9 +75,10 @@ fun FlightRow(
                     )
                 }
             }
+
             IconButton(
                 onClick = {
-                    onFavoriteClick(departureAirport.code, destinationAirport.code)
+                    onFavoriteClicked(departureAirport.code, destinationAirport.code)
                 },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
@@ -82,6 +86,23 @@ fun FlightRow(
                     modifier = Modifier.size(30.dp),
                     imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.Star,
                     tint = if (isFavorite) colorResource(id = R.color.my_golden_yellow) else Color.Gray,
+                    contentDescription = null
+                )
+            }
+            // Resumen de la información del lugar
+            val flightSummary = stringResource(
+                R.string.flight_summary,
+                departureAirport.name,
+                destinationAirport.name,
+            )
+            IconButton(
+                onClick = { onSendButtonClicked(flightSummary) },
+                modifier = Modifier.align(Alignment.CenterVertically)
+            ) {
+                Icon(
+                    modifier = Modifier.size(30.dp),
+                    imageVector = Icons.Filled.Share,
+                    tint = Color.Gray,
                     contentDescription = null
                 )
             }
@@ -95,9 +116,13 @@ fun FlightResults(
     departureAirport: Airport,
     destinationList: List<Airport>,
     favoriteList: List<Favorite>,
-    onFavoriteClick: (String, String) -> Unit
+    onFavoriteClick: (String, String) -> Unit,
+    onSendButtonClicked: (String) -> Unit
 ) {
-    Column {
+    Column(
+        modifier = Modifier
+            .padding(10.dp)
+    ) {
         Text(
             modifier = Modifier
                 .padding(10.dp),
@@ -124,7 +149,8 @@ fun FlightResults(
                     isFavorite = isFavorite != null,
                     departureAirport = departureAirport,
                     destinationAirport = item,
-                    onFavoriteClick = onFavoriteClick
+                    onFavoriteClicked = onFavoriteClick,
+                    onSendButtonClicked = onSendButtonClicked
                 )
             }
         }
@@ -144,7 +170,8 @@ fun FlightRowPreview() {
             code = "VIE",
             name = "Vienna International Airport"
         ),
-        onFavoriteClick = { _, _ -> }
+        onFavoriteClicked = { _, _ -> },
+        onSendButtonClicked = {}
     )
 }
 
@@ -180,6 +207,7 @@ fun FlightResultsPreview() {
                 destinationCode = "ATH"
             )
         ),
-        onFavoriteClick = { _, _ -> }
+        onFavoriteClick = { _, _ -> },
+        onSendButtonClicked = {}
     )
 }

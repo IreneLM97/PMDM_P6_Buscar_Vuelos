@@ -25,7 +25,11 @@ abstract class FlightDatabase : RoomDatabase() {
                     "flight_database"
                 )
                     .createFromAsset("database/flight_search.db")
-                    .fallbackToDestructiveMigration()
+                    /** Con esta línea, Room eliminará los cambios producidos durante la ejecución
+                     * y cogerá la base de datos como estaba inicialmente, esto afecta a que no
+                     * aparecerán los favoritos al salir y volver a entrar en la aplicación.
+                     */
+                    // .fallbackToDestructiveMigration()
                     .build()
                     .also { Instance = it }
             }

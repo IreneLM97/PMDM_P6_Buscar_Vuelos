@@ -21,9 +21,7 @@ class UserPreferencesRepository(
     private val dataStore: DataStore<Preferences>
 ) {
 
-    suspend fun saveUserPreferences(
-        searchValue: String,
-    ) {
+    suspend fun saveUserPreferences(searchValue: String) {
         dataStore.edit { preferences ->
             preferences[SEARCH_VALUE] = searchValue
         }
@@ -32,7 +30,7 @@ class UserPreferencesRepository(
     val userPreferences: Flow<UserPreferences> = dataStore.data
         .catch {
             if (it is IOException) {
-                Log.e(TAG, "Error reading preferences.", it)
+                Log.e(TAG, "Error reading preferences", it)
                 emit(emptyPreferences())
             } else {
                 throw it

@@ -1,11 +1,11 @@
-package com.example.pmdm_p6_buscar_vuelos.ui.screens
+package com.example.pmdm_p6_buscar_vuelos.ui.search
 
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pmdm_p6_buscar_vuelos.data.FlightRepository
 import com.example.pmdm_p6_buscar_vuelos.data.UserPreferencesRepository
-import com.example.pmdm_p6_buscar_vuelos.model.Airport
+import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -91,6 +91,29 @@ class SearchViewModel(
     private fun updatePreferences(searchQuery: String) {
         viewModelScope.launch {
             userPreferencesRepository.saveUserPreferences(searchValue = searchQuery)
+        }
+    }
+
+    fun onStarClick(departureCode: String, destinationCode: String) {
+        viewModelScope.launch {
+            val favorite: Favorite = flightRepository.getFavoriteByInfo(departureCode, destinationCode)
+
+            if (favorite == null) {
+                val tmp = Favorite(
+                    departureCode = departureCode,
+                    destinationCode = destinationCode,
+                )
+                flightRepository.insertFavorite(tmp)
+            } else {
+                flightRepository.deleteFavorite(favorite)
+            }
+
+            val play = flightRepository.getAllFavorites()
+            _uiState.update {
+                uiState.value.copy(
+                    favoriteList = play,
+                )
+            }
         }
     }
 }

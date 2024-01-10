@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.pmdm_p6_buscar_vuelos.FlightApplication
-import com.example.pmdm_p6_buscar_vuelos.ui.screens.SearchViewModel
+import com.example.pmdm_p6_buscar_vuelos.ui.search.SearchViewModel
 
 /**
  * Provides Factory to create instance of ViewModel for the entire Inventory app

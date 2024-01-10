@@ -1,5 +1,7 @@
-package com.example.pmdm_p6_buscar_vuelos.ui.screens
+package com.example.pmdm_p6_buscar_vuelos.ui.search
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -22,13 +24,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pmdm_p6_buscar_vuelos.R
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pmdm_p6_buscar_vuelos.ui.AppViewModelProvider
 
 @Composable
 fun SearchScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSendButtonClicked: (String) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -41,18 +46,20 @@ fun SearchScreen(
     ) {
         // Caja de texto de búsqueda
         SearchTextField(
-            uiState.searchQuery,
-            onQueryChange = {
+            searchQuery = uiState.searchQuery,
+            onChangeQuery = {
                 viewModel.updateSelectedCode("")
                 viewModel.onChangeQuery(it)
+                if(it.isEmpty()) focusManager.clearFocus()
             }
         )
 
         val airportList = uiState.airportList
         val favoriteList = uiState.favoriteList
         val searchQuery = uiState.searchQuery
+        val selectedCode = uiState.selectedCode
 
-        // Comprobamos si ha escrito algo o no en la caja de texto
+        // Mostramos los resultados en función del estado de la búsqueda
         when {
             searchQuery.isEmpty() && favoriteList.isEmpty() -> {
                 NoFavoritesResult()
@@ -61,7 +68,17 @@ fun SearchScreen(
                 FavoriteResults(
                     airportList = airportList,
                     favoriteList = favoriteList,
-                    onFavoriteClick = { _, _ -> }
+                    onFavoriteClicked = { depCode, destCode -> viewModel.onStarClick(depCode, destCode) },
+                    onSendButtonClicked = onSendButtonClicked
+                )
+            }
+            selectedCode.isNotEmpty() -> {
+                FlightResults(
+                    departureAirport = uiState.departureAirport,
+                    destinationList = uiState.destinationList,
+                    favoriteList = uiState.favoriteList,
+                    onFavoriteClick = { depCode, destCode -> viewModel.onStarClick(depCode, destCode) },
+                    onSendButtonClicked = onSendButtonClicked
                 )
             }
             else -> {
@@ -75,35 +92,26 @@ fun SearchScreen(
                 )
             }
         }
-
-        // Mostramos los vuelos en función del código seleccionado
-        if(uiState.selectedCode.isNotEmpty()) {
-            FlightResults(
-                departureAirport = uiState.departureAirport,
-                destinationList = uiState.destinationList,
-                favoriteList = uiState.favoriteList,
-                onFavoriteClick = {_,_ -> }
-            )
-        }
     }
 }
 
 @Composable
 fun SearchTextField(
     searchQuery: String,
-    onQueryChange: (String) -> Unit
+    onChangeQuery: (String) -> Unit
 ) {
     // Campo de texto para ingresar la consulta de búsqueda
     OutlinedTextField(
         value = searchQuery,
-        onValueChange = { onQueryChange(it) },
+        onValueChange = { onChangeQuery(it) },
         singleLine = true,
         maxLines = 1,
         placeholder = {
             Text(text = stringResource(R.string.search_label))
         },
         keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Search
+            imeAction = ImeAction.Search,
+            keyboardType = KeyboardType.Text
         ),
         leadingIcon = {
             Icon(

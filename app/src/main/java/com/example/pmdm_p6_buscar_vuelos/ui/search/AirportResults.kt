@@ -1,4 +1,4 @@
-package com.example.pmdm_p6_buscar_vuelos.ui.screens
+package com.example.pmdm_p6_buscar_vuelos.ui.search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,7 +27,7 @@ fun AirportRow(
     modifier: Modifier = Modifier,
     isClickable: Boolean = true,
     airport : Airport,
-    onSelectCode: (String) -> Unit = {}
+    onSelectedCode: (String) -> Unit = {}
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -35,7 +35,7 @@ fun AirportRow(
             .fillMaxWidth()
             .padding(10.dp)
             .clickable(enabled = isClickable) {
-                if (airport.code != "") onSelectCode(airport.code)
+                if (airport.code != "") onSelectedCode(airport.code)
             }
     ) {
         Text(
@@ -75,7 +75,7 @@ fun AirportResults(
                     modifier = Modifier
                         .background(colorResource(id = R.color.my_gray_green)),
                     airport = it,
-                    onSelectCode = onSelectCode
+                    onSelectedCode = onSelectCode
                 )
             }
         }
