@@ -9,8 +9,6 @@ import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -51,17 +49,15 @@ class SearchViewModel(
                         favoriteList = flightRepository.getAllFavorites().toMutableStateList()
                     )
                 }
-                delay(1000)
+                delay(100)
             }
         } else {
             viewModelScope.launch {
                 flightRepository.getAllAirports(searchQuery).collect { airportList ->
-                        _uiState.update {
-                            uiState.value.copy(
-                                airportList = airportList,
-                            )
-                        }
+                    _uiState.update {
+                        uiState.value.copy(airportList = airportList)
                     }
+                }
             }
         }
     }
@@ -84,6 +80,9 @@ class SearchViewModel(
                     departureAirport = flightRepository.getAirportByCode(selectedCode)
                 )
             }
+        }
+        viewModelScope.launch {
+            userPreferencesRepository.saveUserPreferences(searchValue = selectedCode)
         }
     }
 
