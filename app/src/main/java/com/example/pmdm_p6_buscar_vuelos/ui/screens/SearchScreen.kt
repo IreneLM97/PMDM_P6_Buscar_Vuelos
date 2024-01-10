@@ -53,15 +53,17 @@ fun SearchScreen(
             }
         )
 
+        val airportList = uiState.airportList
+        val favoriteList = uiState.favoriteList
+
         // Comprobamos si ha escrito algo o no en la caja de texto
         if (uiState.searchQuery.isEmpty()) {
-            val favoriteList = uiState.favoriteList
-
             if (favoriteList.isEmpty()){
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .wrapContentSize(Alignment.Center)
+                        .padding(50.dp)
+                        .wrapContentSize(align = Alignment.TopCenter)
                 ) {
                     Text(
                         text = stringResource(R.string.no_favorites_yet),
@@ -71,15 +73,14 @@ fun SearchScreen(
                 }
             } else {
                 FavoriteResults(
-                    favorites = favoriteList,
+                    airportList = airportList,
+                    favoriteList = favoriteList,
                     onFavoriteClick = {_,_ ->}
                 )
             }
         } else {
-            val airports = uiState.airportList
-
             AirportResults(
-                airports = airports,
+                airports = airportList,
                 onSelectCode = {
                     viewModel.updateSelectedCode(it)
                     viewModel.onSelectedCode(it)
@@ -87,16 +88,16 @@ fun SearchScreen(
                 }
             )
         }
-    }
-    
-    // Mostramos los vuelos en función del código seleccionado
-    if(uiState.selectedCode.isNotEmpty()) {
-        FlightResults(
-            departureAirport = uiState.departureAirport,
-            destinationList = uiState.destinationList,
-            favoriteList = uiState.favoriteList,
-            onFavoriteClick = {_,_ -> }
-        )
+
+        // Mostramos los vuelos en función del código seleccionado
+        if(uiState.selectedCode.isNotEmpty()) {
+            FlightResults(
+                departureAirport = uiState.departureAirport,
+                destinationList = uiState.destinationList,
+                favoriteList = uiState.favoriteList,
+                onFavoriteClick = {_,_ -> }
+            )
+        }
     }
 }
 

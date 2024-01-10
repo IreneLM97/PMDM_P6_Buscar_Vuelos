@@ -40,6 +40,7 @@ class SearchViewModel(
             viewModelScope.launch {
                 _uiState.update {
                     uiState.value.copy(
+                        airportList = flightRepository.getAllAirports().toMutableStateList(),
                         favoriteList = flightRepository.getAllFavorites().toMutableStateList()
                     )
                 }

@@ -25,77 +25,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pmdm_p6_buscar_vuelos.R
+import com.example.pmdm_p6_buscar_vuelos.model.Airport
 import com.example.pmdm_p6_buscar_vuelos.model.Favorite
-
-@Composable
-fun FavoriteRow(
-    modifier: Modifier = Modifier,
-    isFavorite: Boolean = true,
-    departureCode: String,
-    destinationCode: String,
-    onFavoriteClick: (String, String) -> Unit,
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(4.dp)
-    ) {
-        Row {
-            Column(
-                modifier = modifier
-                    .weight(10f)
-            ) {
-                Column {
-                    Text(
-                        text = stringResource(R.string.depart_label),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(start = 32.dp)
-                    )
-                    Text(
-                        text = departureCode
-                    )
-                    Text(
-                        text = stringResource(R.string.arrive_label),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(start = 32.dp)
-                    )
-                    Text(
-                        text = destinationCode
-                    )
-                }
-            }
-            IconButton(
-                onClick = {
-                    onFavoriteClick(departureCode, destinationCode)
-                },
-                modifier = Modifier.align(Alignment.CenterVertically)
-            ) {
-                Icon(
-                    modifier = Modifier.size(30.dp),
-                    imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.Star,
-                    tint = if (isFavorite) colorResource(id = R.color.my_golden_yellow) else Color.LightGray,
-                    contentDescription = null
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun FavoriteResults(
     modifier: Modifier = Modifier,
-    favorites: List<Favorite>,
+    airportList: List<Airport>,
+    favoriteList: List<Favorite>,
     onFavoriteClick: (String, String) -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .padding(top = 140.dp)
-    ) {
+    Column {
         Text(
             modifier = Modifier
                 .padding(10.dp),
             fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
+            fontSize = 20.sp,
             text = stringResource(R.string.favorites_flights)
         )
         LazyColumn(
@@ -104,11 +49,17 @@ fun FavoriteResults(
                 .fillMaxWidth()
         ) {
             items(
-                items = favorites
-            ) { item ->
-                FavoriteRow(
-                    departureCode = item.departureCode,
-                    destinationCode = item.destinationCode,
+                favoriteList
+            ) { favorite ->
+                val departureAirport = airportList.first {
+                        airport -> airport.code == favorite.departureCode
+                }
+                val destinationAirport = airportList.first {
+                        airport -> airport.code == favorite.destinationCode
+                }
+                FlightRow(
+                    departureAirport = departureAirport,
+                    destinationAirport = destinationAirport,
                     onFavoriteClick = onFavoriteClick
                 )
             }

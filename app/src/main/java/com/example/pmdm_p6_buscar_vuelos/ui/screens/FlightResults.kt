@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun FlightRow(
     modifier: Modifier = Modifier,
-    isFavorite: Boolean,
+    isFavorite: Boolean = true,
     departureAirport: Airport,
     destinationAirport: Airport,
     onFavoriteClick: (String, String) -> Unit,
@@ -97,10 +97,7 @@ fun FlightResults(
     favoriteList: List<Favorite>,
     onFavoriteClick: (String, String) -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .padding(top = 140.dp)
-    ) {
+    Column {
         Text(
             modifier = Modifier
                 .padding(10.dp),
