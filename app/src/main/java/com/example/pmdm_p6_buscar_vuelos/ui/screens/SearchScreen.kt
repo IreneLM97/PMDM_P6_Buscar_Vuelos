@@ -67,7 +67,10 @@ fun SearchScreen(
                     )
                 }
             } else {
-
+                FavoriteResults(
+                    favorites = favoriteList,
+                    onFavoriteClick = {_,_ ->}
+                )
             }
         } else {
             val airports = uiState.airportList
