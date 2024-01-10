@@ -27,7 +27,7 @@ interface FlightDao {
     suspend fun getAllFavorites(): List<Favorite>
 
     @Query("SELECT * FROM favorite WHERE departure_code = :departureCode AND destination_code = :destinationCode")
-    suspend fun getFavoriteByInfo(departureCode: String, destinationCode: String): Favorite
+    suspend fun getFavoriteByInfo(departureCode: String, destinationCode: String): Favorite?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertFavorite(flight: Favorite)

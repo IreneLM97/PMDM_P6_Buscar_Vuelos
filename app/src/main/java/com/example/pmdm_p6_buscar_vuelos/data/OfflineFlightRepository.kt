@@ -27,7 +27,7 @@ class OfflineFlightRepository(
         return flightDao.getAllFavorites()
     }
 
-    override suspend fun getFavoriteByInfo(departureCode: String, destinationCode: String): Favorite {
+    override suspend fun getFavoriteByInfo(departureCode: String, destinationCode: String): Favorite? {
         return flightDao.getFavoriteByInfo(departureCode, destinationCode)
     }
     override suspend fun insertFavorite(flight: Favorite) {

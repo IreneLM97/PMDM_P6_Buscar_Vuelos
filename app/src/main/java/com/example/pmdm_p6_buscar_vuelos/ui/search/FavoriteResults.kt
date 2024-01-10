@@ -1,6 +1,5 @@
 package com.example.pmdm_p6_buscar_vuelos.ui.search
 
-import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -52,7 +51,7 @@ fun FavoriteResults(
                 val destinationAirport = airportList.first {
                         airport -> airport.code == favorite.destinationCode
                 }
-                FlightRow(
+                FlightInfo(
                     departureAirport = departureAirport,
                     destinationAirport = destinationAirport,
                     onFavoriteClicked = onFavoriteClicked,

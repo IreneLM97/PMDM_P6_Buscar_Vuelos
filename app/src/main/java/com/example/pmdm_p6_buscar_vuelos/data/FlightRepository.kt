@@ -11,7 +11,7 @@ interface FlightRepository {
     suspend fun getAllAirportsNoCode(code: String): List<Airport>
 
     suspend fun getAllFavorites(): List<Favorite>
-    suspend fun getFavoriteByInfo(departureCode: String, destinationCode: String): Favorite
+    suspend fun getFavoriteByInfo(departureCode: String, destinationCode: String): Favorite?
     suspend fun insertFavorite(flight: Favorite)
     suspend fun deleteFavorite(flight: Favorite)
 }

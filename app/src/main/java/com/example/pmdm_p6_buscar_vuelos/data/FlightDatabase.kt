@@ -27,7 +27,7 @@ abstract class FlightDatabase : RoomDatabase() {
                     .createFromAsset("database/flight_search.db")
                     /** Con esta línea, Room eliminará los cambios producidos durante la ejecución
                      * y cogerá la base de datos como estaba inicialmente, esto afecta a que no
-                     * aparecerán los favoritos al salir y volver a entrar en la aplicación.
+                     * aparecerán los favoritos al slide y volver a entrar en la aplicación.
                      */
                     // .fallbackToDestructiveMigration()
                     .build()

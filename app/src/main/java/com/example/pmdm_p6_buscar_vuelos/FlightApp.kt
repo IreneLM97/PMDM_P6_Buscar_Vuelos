@@ -9,12 +9,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pmdm_p6_buscar_vuelos.ui.AppViewModelProvider
 import com.example.pmdm_p6_buscar_vuelos.ui.search.SearchScreen
+import com.example.pmdm_p6_buscar_vuelos.ui.search.SearchViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,11 +41,28 @@ fun FlightApp() {
         }
     )
     {
-        innerPadding ->
         val context = LocalContext.current
+        val focusManager = LocalFocusManager.current
+
+        val viewModel: SearchViewModel = viewModel(factory = AppViewModelProvider.Factory)
+        val uiState = viewModel.uiState.collectAsState().value
+
         SearchScreen(
-            modifier = Modifier
-                .padding(innerPadding),
+            modifier = Modifier.padding(it),
+            searchUiState = uiState,
+            onQueryChanged = { query ->
+                viewModel.updateSelectedCode("")
+                viewModel.onChangeQuery(query)
+                if(query.isEmpty()) focusManager.clearFocus()
+            },
+            onCodeClicked = { code ->
+                viewModel.updateSelectedCode(code)
+                viewModel.onSelectedCode(code)
+                focusManager.clearFocus()
+            },
+            onFavoriteClicked = { depCode, destCode ->
+                viewModel.onStarClick(depCode, destCode)
+            },
             onSendButtonClicked = { summary: String ->
                 shareFlight(context, summary = summary)  // compartimos la información
             }
@@ -53,7 +75,7 @@ fun FlightApp() {
  * Función que permite compartir la información de un lugar a otra aplicación.
  *
  * @param context contexto de la aplicación
- * @param summary resumen del lugar que se quiere compartir
+ * @param summary resumen del vuelo que se quiere compartir
  */
 private fun shareFlight(
     context: Context,

@@ -23,11 +23,11 @@ import com.example.pmdm_p6_buscar_vuelos.R
 import com.example.pmdm_p6_buscar_vuelos.model.Airport
 
 @Composable
-fun AirportRow(
+fun AirportInfo(
     modifier: Modifier = Modifier,
     isClickable: Boolean = true,
     airport : Airport,
-    onSelectedCode: (String) -> Unit = {}
+    onCodeClicked: (String) -> Unit = {}
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -35,7 +35,7 @@ fun AirportRow(
             .fillMaxWidth()
             .padding(10.dp)
             .clickable(enabled = isClickable) {
-                if (airport.code != "") onSelectedCode(airport.code)
+                if (airport.code != "") onCodeClicked(airport.code)
             }
     ) {
         Text(
@@ -55,7 +55,7 @@ fun AirportRow(
 fun AirportResults(
     modifier: Modifier = Modifier,
     airports: List<Airport>,
-    onSelectCode: (String) -> Unit = {},
+    onCodeClicked: (String) -> Unit = {},
 ) {
     LazyColumn(
         modifier = modifier
@@ -71,11 +71,11 @@ fun AirportResults(
                     .fillMaxWidth()
                     .padding(4.dp)
             ) {
-                AirportRow(
+                AirportInfo(
                     modifier = Modifier
                         .background(colorResource(id = R.color.my_gray_green)),
                     airport = it,
-                    onSelectedCode = onSelectCode
+                    onCodeClicked = onCodeClicked
                 )
             }
         }

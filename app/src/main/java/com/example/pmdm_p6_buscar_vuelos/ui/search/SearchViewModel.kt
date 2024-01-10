@@ -96,22 +96,13 @@ class SearchViewModel(
 
     fun onStarClick(departureCode: String, destinationCode: String) {
         viewModelScope.launch {
-            val favorite: Favorite = flightRepository.getFavoriteByInfo(departureCode, destinationCode)
-
-            if (favorite == null) {
-                val tmp = Favorite(
-                    departureCode = departureCode,
-                    destinationCode = destinationCode,
-                )
-                flightRepository.insertFavorite(tmp)
-            } else {
+            flightRepository.getFavoriteByInfo(departureCode, destinationCode)?.let { favorite ->
                 flightRepository.deleteFavorite(favorite)
-            }
+            } ?: flightRepository.insertFavorite(Favorite(departureCode = departureCode, destinationCode = destinationCode))
 
-            val play = flightRepository.getAllFavorites()
             _uiState.update {
                 uiState.value.copy(
-                    favoriteList = play,
+                    favoriteList = flightRepository.getAllFavorites(),
                 )
             }
         }

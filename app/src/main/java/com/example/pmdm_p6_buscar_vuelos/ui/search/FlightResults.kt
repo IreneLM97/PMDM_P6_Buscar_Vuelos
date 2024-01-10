@@ -1,6 +1,5 @@
 package com.example.pmdm_p6_buscar_vuelos.ui.search
 
-import android.widget.ShareActionProvider.OnShareTargetSelectedListener
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun FlightRow(
+fun FlightInfo(
     modifier: Modifier = Modifier,
     isFavorite: Boolean = true,
     departureAirport: Airport,
@@ -60,7 +59,7 @@ fun FlightRow(
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(start = 32.dp)
                     )
-                    AirportRow(
+                    AirportInfo(
                         isClickable = false,
                         airport = departureAirport
                     )
@@ -69,7 +68,7 @@ fun FlightRow(
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(start = 32.dp)
                     )
-                    AirportRow(
+                    AirportInfo(
                         isClickable = false,
                         airport = destinationAirport
                     )
@@ -145,7 +144,7 @@ fun FlightResults(
                     it.departureCode == departureAirport.code && it.destinationCode == item.code
                 }
 
-                FlightRow(
+                FlightInfo(
                     isFavorite = isFavorite != null,
                     departureAirport = departureAirport,
                     destinationAirport = item,
@@ -160,7 +159,7 @@ fun FlightResults(
 @Preview
 @Composable
 fun FlightRowPreview() {
-    FlightRow(
+    FlightInfo(
         isFavorite = true,
         departureAirport = Airport(
             code = "FCO",
