@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">PMDM_P6_Buscar_Vuelos</string>
-    <string name="flight_search">Flight Search</string>
+    <string name="flight_search">Vuelos</string>
 
-    <string name="search_label">Enter departure airport</string>
-    <string name="search_icon">Search Icon</string>
+    <string name="search_label">Aeropuerto de salida</string>
+    <string name="search_icon">Icono de búsqueda</string>
     <string name="no_favorites_yet">NO HAY FAVORITOS</string>
-    <string name="depart_label">DEPART</string>
-    <string name="arrive_label">ARRIVE</string>
-    <string name="flights_from">Flights from %1$s</string>
-    <string name="favorites_flights">Favorites flights</string>
+    <string name="depart_label">SALIDA</string>
+    <string name="arrive_label">LLEGADA</string>
+    <string name="flights_from">Vuelos desde %1$s</string>
+    <string name="favorites_flights">Mis favoritos</string>
 </resources>

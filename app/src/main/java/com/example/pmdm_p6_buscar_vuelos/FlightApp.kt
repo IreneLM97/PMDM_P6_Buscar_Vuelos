@@ -8,6 +8,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import com.example.pmdm_p6_buscar_vuelos.ui.screens.SearchScreen
@@ -20,10 +21,13 @@ fun FlightApp() {
             // Barra superior personalizada
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = R.string.flight_search))
+                    Text(
+                        text = stringResource(id = R.string.flight_search),
+                        color = Color.White
+                    )
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = colorResource(id = R.color.my_yellow)
+                    containerColor = colorResource(id = R.color.my_green)
                 )
             )
         }

@@ -1,5 +1,6 @@
 package com.example.pmdm_p6_buscar_vuelos.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,7 +43,10 @@ fun FlightRow(
             .fillMaxWidth()
             .padding(4.dp)
     ) {
-        Row {
+        Row(
+            modifier = Modifier
+                .background(colorResource(id = R.color.my_gray_dark_green))
+        ) {
             Column(
                 modifier = modifier
                     .weight(10f)
@@ -77,7 +81,7 @@ fun FlightRow(
                 Icon(
                     modifier = Modifier.size(30.dp),
                     imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.Star,
-                    tint = if (isFavorite) colorResource(id = R.color.my_golden_yellow) else Color.LightGray,
+                    tint = if (isFavorite) colorResource(id = R.color.my_golden_yellow) else Color.Gray,
                     contentDescription = null
                 )
             }
@@ -101,7 +105,7 @@ fun FlightResults(
             modifier = Modifier
                 .padding(10.dp),
             fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
+            fontSize = 20.sp,
             text = stringResource(
                 id = R.string.flights_from,
                 departureAirport.code

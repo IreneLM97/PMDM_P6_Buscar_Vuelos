@@ -26,14 +26,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pmdm_p6_buscar_vuelos.R
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pmdm_p6_buscar_vuelos.ui.AppViewModelProvider
 
 @Composable
 fun SearchScreen(
-    modifier: Modifier = Modifier,
-    onSelectCode: (String) -> Unit = {}
+    modifier: Modifier = Modifier
 ) {
+    val focusManager = LocalFocusManager.current
+
     val viewModel: SearchViewModel = viewModel(factory = AppViewModelProvider.Factory)
     val uiState = viewModel.uiState.collectAsState().value
 
@@ -80,6 +83,7 @@ fun SearchScreen(
                 onSelectCode = {
                     viewModel.updateSelectedCode(it)
                     viewModel.onSelectedCode(it)
+                    focusManager.clearFocus()
                 }
             )
         }
@@ -123,13 +127,13 @@ fun SearchTextField(
             .fillMaxWidth()
             .padding(start = 8.dp, end = 15.dp, top = 8.dp)
             .background(
-                colorResource(R.color.my_light_yellow),
+                colorResource(R.color.my_light_green),
                 shape = RoundedCornerShape(40.dp)
             )
             .clip(RoundedCornerShape(40.dp))
             .border(
                 width = 1.dp,
-                color = colorResource(id = R.color.my_yellow),
+                color = colorResource(id = R.color.my_dark_green),
                 shape = RoundedCornerShape(40.dp)
             )
     )

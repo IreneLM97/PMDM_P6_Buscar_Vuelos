@@ -2,8 +2,8 @@ package com.example.pmdm_p6_buscar_vuelos.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Yellow80 = Color(0xFF916202)
-val GreenGrey80 = Color(0x85916202)
+val Green80 = Color(0xFF14513D)
+val GreenGrey80 = Color(0x7214513D)
 
-val Yellow40 = Color(0xFFDE8E10)
-val YellowGrey40 = Color(0xC4E6A754)
+val Green40 = Color(0xFF53A33D)
+val GreenGrey40 = Color(0x7C53A33D)

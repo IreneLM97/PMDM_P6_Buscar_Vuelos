@@ -8,9 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="my_dark_yellow">#D68910</color>
-    <color name="my_yellow">#F39C12</color>
-    <color name="my_light_yellow">#fce38b</color>
-    <color name="my_gray_yellow">#EAD89D</color>
+    <color name="my_dark_green">#53A33D</color>
+    <color name="my_green">#60BA49</color>
+    <color name="my_light_green">#cfecc6</color>
+    <color name="my_gray_green">#f4fbf2</color>
+    <color name="my_gray_dark_green">#6ACFECC6</color>
     <color name="my_golden_yellow">#E3B100</color>
 </resources>
