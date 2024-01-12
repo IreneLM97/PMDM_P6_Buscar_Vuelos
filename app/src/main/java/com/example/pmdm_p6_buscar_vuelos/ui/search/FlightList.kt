@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun FlightInfo(
+fun FlightItem(
     modifier: Modifier = Modifier,
     isFavorite: Boolean = true,
     departureAirport: Airport,
@@ -59,7 +59,7 @@ fun FlightInfo(
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(start = 32.dp)
                     )
-                    AirportInfo(
+                    AirportItem(
                         isClickable = false,
                         airport = departureAirport
                     )
@@ -68,7 +68,7 @@ fun FlightInfo(
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(start = 32.dp)
                     )
-                    AirportInfo(
+                    AirportItem(
                         isClickable = false,
                         airport = destinationAirport
                     )
@@ -110,7 +110,7 @@ fun FlightInfo(
 }
 
 @Composable
-fun FlightResults(
+fun FlightList(
     modifier: Modifier = Modifier,
     departureAirport: Airport,
     destinationList: List<Airport>,
@@ -144,7 +144,7 @@ fun FlightResults(
                     it.departureCode == departureAirport.code && it.destinationCode == item.code
                 }
 
-                FlightInfo(
+                FlightItem(
                     isFavorite = isFavorite != null,
                     departureAirport = departureAirport,
                     destinationAirport = item,
@@ -159,7 +159,7 @@ fun FlightResults(
 @Preview
 @Composable
 fun FlightResultsPreview() {
-    FlightResults(
+    FlightList(
         departureAirport = Airport(
             code = "FCO",
             name = "Leonardo da Vinci International Airport"

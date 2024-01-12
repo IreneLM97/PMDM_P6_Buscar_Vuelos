@@ -23,7 +23,7 @@ class OfflineFlightRepository(
         return flightDao.getAllAirportsNoCode(code)
     }
 
-    override suspend fun getAllFavorites(): List<Favorite> {
+    override fun getAllFavorites(): Flow<List<Favorite>> {
         return flightDao.getAllFavorites()
     }
 

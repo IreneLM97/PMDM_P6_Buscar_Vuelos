@@ -10,7 +10,7 @@ interface FlightRepository {
     suspend fun getAirportByCode(code: String): Airport
     suspend fun getAllAirportsNoCode(code: String): List<Airport>
 
-    suspend fun getAllFavorites(): List<Favorite>
+    fun getAllFavorites(): Flow<List<Favorite>>
     suspend fun getFavoriteByInfo(departureCode: String, destinationCode: String): Favorite?
     suspend fun insertFavorite(flight: Favorite)
     suspend fun deleteFavorite(flight: Favorite)

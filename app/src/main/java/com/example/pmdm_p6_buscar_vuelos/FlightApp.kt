@@ -10,6 +10,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -45,11 +46,13 @@ fun FlightApp() {
         val focusManager = LocalFocusManager.current
 
         val viewModel: SearchViewModel = viewModel(factory = AppViewModelProvider.Factory)
-        val uiState = viewModel.uiState.collectAsState().value
+        val searchUiState = viewModel.searchUiState.collectAsState().value
+        val favoriteUiState by viewModel.favoriteUiState.collectAsState()
 
         SearchScreen(
             modifier = Modifier.padding(it),
-            searchUiState = uiState,
+            favoriteUiState = favoriteUiState,
+            searchUiState = searchUiState,
             onQueryChanged = { query ->
                 viewModel.updateSelectedCode("")
                 viewModel.onQueryChanged(query)

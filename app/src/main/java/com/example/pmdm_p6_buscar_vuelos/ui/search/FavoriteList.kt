@@ -21,7 +21,7 @@ import com.example.pmdm_p6_buscar_vuelos.model.Airport
 import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 
 @Composable
-fun FavoriteResults(
+fun FavoriteList(
     modifier: Modifier = Modifier,
     airportList: List<Airport>,
     favoriteList: List<Favorite>,
@@ -51,7 +51,7 @@ fun FavoriteResults(
                 val destinationAirport = airportList.first {
                         airport -> airport.code == favorite.destinationCode
                 }
-                FlightInfo(
+                FlightItem(
                     departureAirport = departureAirport,
                     destinationAirport = destinationAirport,
                     onFavoriteClicked = onFavoriteClicked,

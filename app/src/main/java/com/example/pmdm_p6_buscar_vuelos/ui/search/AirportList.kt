@@ -23,7 +23,7 @@ import com.example.pmdm_p6_buscar_vuelos.R
 import com.example.pmdm_p6_buscar_vuelos.model.Airport
 
 @Composable
-fun AirportInfo(
+fun AirportItem(
     modifier: Modifier = Modifier,
     isClickable: Boolean = true,
     airport : Airport,
@@ -52,7 +52,7 @@ fun AirportInfo(
 }
 
 @Composable
-fun AirportResults(
+fun AirportList(
     modifier: Modifier = Modifier,
     airports: List<Airport>,
     onCodeClicked: (String) -> Unit = {},
@@ -71,7 +71,7 @@ fun AirportResults(
                     .fillMaxWidth()
                     .padding(4.dp)
             ) {
-                AirportInfo(
+                AirportItem(
                     modifier = Modifier
                         .background(colorResource(id = R.color.my_gray_green)),
                     airport = it,
@@ -85,7 +85,7 @@ fun AirportResults(
 @Preview(showBackground = true)
 @Composable
 fun AirportResultsPreview() {
-    AirportResults(
+    AirportList(
         airports = listOf(
             Airport(
                 code = "FCO",

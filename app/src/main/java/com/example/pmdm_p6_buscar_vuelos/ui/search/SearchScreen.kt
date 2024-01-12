@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.KeyboardType
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
+    favoriteUiState: FavoriteUiState = FavoriteUiState(),
     searchUiState: SearchUiState = SearchUiState(),
     onQueryChanged: (String) -> Unit = {},
     onCodeClicked: (String) -> Unit = {},
@@ -44,28 +45,28 @@ fun SearchScreen(
 
         // Mostramos los resultados en función del estado de la aplicación
         when {
-            searchUiState.searchQuery.isEmpty() && searchUiState.favoriteList.isEmpty() -> {
+            searchUiState.searchQuery.isEmpty() && favoriteUiState.favoriteList.isEmpty() -> {
                 NoFavoritesResult()
             }
             searchUiState.searchQuery.isEmpty() -> {
-                FavoriteResults(
+                FavoriteList(
                     airportList = searchUiState.airportList,
-                    favoriteList = searchUiState.favoriteList,
+                    favoriteList = favoriteUiState.favoriteList,
                     onFavoriteClicked = onFavoriteClicked,
                     onSendButtonClicked = onSendButtonClicked
                 )
             }
             searchUiState.selectedCode.isNotEmpty() -> {
-                FlightResults(
+                FlightList(
                     departureAirport = searchUiState.departureAirport,
                     destinationList = searchUiState.destinationList,
-                    favoriteList = searchUiState.favoriteList,
+                    favoriteList = favoriteUiState.favoriteList,
                     onFavoriteClick = onFavoriteClicked,
                     onSendButtonClicked = onSendButtonClicked
                 )
             }
             else -> {
-                AirportResults(
+                AirportList(
                     airports = searchUiState.airportList,
                     onCodeClicked = onCodeClicked
                 )

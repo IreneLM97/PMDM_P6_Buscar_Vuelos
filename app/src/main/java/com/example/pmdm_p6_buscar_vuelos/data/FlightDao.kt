@@ -24,7 +24,7 @@ interface FlightDao {
     suspend fun getAllAirportsNoCode(code: String): List<Airport>
 
     @Query("SELECT * FROM favorite ORDER BY id DESC")
-    suspend fun getAllFavorites(): List<Favorite>
+    fun getAllFavorites(): Flow<List<Favorite>>
 
     @Query("SELECT * FROM favorite WHERE departure_code = :departureCode AND destination_code = :destinationCode")
     suspend fun getFavoriteByInfo(departureCode: String, destinationCode: String): Favorite?
