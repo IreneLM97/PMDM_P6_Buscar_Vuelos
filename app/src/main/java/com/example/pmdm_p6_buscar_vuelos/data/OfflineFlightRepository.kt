@@ -4,6 +4,11 @@ import com.example.pmdm_p6_buscar_vuelos.model.Airport
 import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Implementación de [FlightRepository] que utiliza un [FlightDao] para operaciones offline.
+ *
+ * @property flightDao DAO para acceder a la base de datos Room.
+ */
 class OfflineFlightRepository(
     private val flightDao: FlightDao
 ) : FlightRepository {
@@ -30,11 +35,11 @@ class OfflineFlightRepository(
     override suspend fun getFavoriteByInfo(departureCode: String, destinationCode: String): Favorite? {
         return flightDao.getFavoriteByInfo(departureCode, destinationCode)
     }
-    override suspend fun insertFavorite(flight: Favorite) {
-        return flightDao.insertFavorite(flight)
+    override suspend fun insertFavorite(favorite: Favorite) {
+        return flightDao.insertFavorite(favorite)
     }
 
-    override suspend fun deleteFavorite(flight: Favorite) {
-        return flightDao.deleteFavorite(flight)
+    override suspend fun deleteFavorite(favorite: Favorite) {
+        return flightDao.deleteFavorite(favorite)
     }
 }

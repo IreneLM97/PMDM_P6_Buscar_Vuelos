@@ -9,6 +9,9 @@ import com.example.pmdm_p6_buscar_vuelos.model.Airport
 import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Data Access Object (DAO) para interactuar con la base de datos.
+ */
 @Dao
 interface FlightDao {
     @Query("SELECT * FROM airport ORDER BY id ASC")
@@ -30,7 +33,8 @@ interface FlightDao {
     suspend fun getFavoriteByInfo(departureCode: String, destinationCode: String): Favorite?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertFavorite(flight: Favorite)
+    suspend fun insertFavorite(favorite: Favorite)
+
     @Delete
-    suspend fun deleteFavorite(flight: Favorite)
+    suspend fun deleteFavorite(favorite: Favorite)
 }
