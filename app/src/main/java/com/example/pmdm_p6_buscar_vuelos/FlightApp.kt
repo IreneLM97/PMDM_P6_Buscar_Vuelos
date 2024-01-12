@@ -51,8 +51,6 @@ fun FlightApp() {
 
         SearchScreen(
             modifier = Modifier.padding(it),
-            favoriteUiState = favoriteUiState,
-            searchUiState = searchUiState,
             onQueryChanged = { query ->
                 viewModel.updateSelectedCode("")
                 viewModel.onQueryChanged(query)

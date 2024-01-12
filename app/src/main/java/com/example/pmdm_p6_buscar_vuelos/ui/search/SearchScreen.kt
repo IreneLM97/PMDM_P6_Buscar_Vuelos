@@ -13,6 +13,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
@@ -22,17 +24,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pmdm_p6_buscar_vuelos.R
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pmdm_p6_buscar_vuelos.ui.AppViewModelProvider
 
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    favoriteUiState: FavoriteUiState = FavoriteUiState(),
-    searchUiState: SearchUiState = SearchUiState(),
     onQueryChanged: (String) -> Unit = {},
     onCodeClicked: (String) -> Unit = {},
     onFavoriteClicked: (String, String) -> Unit = {_,_ -> },
-    onSendButtonClicked: (String) -> Unit = {}
+    onSendButtonClicked: (String) -> Unit = {},
+    viewModel: SearchViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val searchUiState = viewModel.searchUiState.collectAsState().value
+    val favoriteUiState by viewModel.favoriteUiState.collectAsState()
+    val airportUiState by viewModel.airportUiState.collectAsState()
+
     // Columna principal que contiene los elementos de la pantalla
     Column(
         modifier = modifier
@@ -50,7 +57,7 @@ fun SearchScreen(
             }
             searchUiState.searchQuery.isEmpty() -> {
                 FavoriteList(
-                    airportList = searchUiState.airportList,
+                    airportList = airportUiState.airportList,
                     favoriteList = favoriteUiState.favoriteList,
                     onFavoriteClicked = onFavoriteClicked,
                     onSendButtonClicked = onSendButtonClicked
@@ -67,7 +74,7 @@ fun SearchScreen(
             }
             else -> {
                 AirportList(
-                    airports = searchUiState.airportList,
+                    airports = searchUiState.suggestionList,
                     onCodeClicked = onCodeClicked
                 )
             }

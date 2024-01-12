@@ -1,13 +1,11 @@
 package com.example.pmdm_p6_buscar_vuelos.ui.search
 
-import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pmdm_p6_buscar_vuelos.data.FlightRepository
 import com.example.pmdm_p6_buscar_vuelos.data.UserPreferencesRepository
 import com.example.pmdm_p6_buscar_vuelos.model.Airport
 import com.example.pmdm_p6_buscar_vuelos.model.Favorite
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -16,6 +14,22 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+data class SearchUiState(
+    val searchQuery: String = "",
+    val selectedCode: String = "",
+    val suggestionList: List<Airport> = emptyList(),
+    val departureAirport: Airport = Airport(),
+    val destinationList: List<Airport> = emptyList()
+)
+
+data class FavoriteUiState(
+    val favoriteList: List<Favorite> = emptyList()
+)
+
+data class AirportUiState(
+    val airportList: List<Airport> = emptyList()
+)
 
 class SearchViewModel(
     val flightRepository: FlightRepository,
@@ -34,21 +48,33 @@ class SearchViewModel(
     }
 
     val favoriteUiState: StateFlow<FavoriteUiState> =
-        flightRepository.getAllFavorites().map { FavoriteUiState(it) }
+        flightRepository.getAllFavorites()
+            .map {
+                FavoriteUiState(it)
+            }
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+                started = SharingStarted.WhileSubscribed(5_000L),
                 initialValue = FavoriteUiState()
             )
 
-    companion object {
-        private const val TIMEOUT_MILLIS = 5_000L
-    }
+    val airportUiState: StateFlow<AirportUiState> =
+        flightRepository.getAllAirports()
+            .map {
+                AirportUiState(it)
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000L),
+                initialValue = AirportUiState()
+            )
 
     fun onQueryChanged(searchQuery: String) {
         // Actualiza preferencias del usuario
         viewModelScope.launch {
-            userPreferencesRepository.saveUserPreferences(searchValue = searchQuery)
+            userPreferencesRepository.saveUserPreferences(
+                searchValue = searchQuery
+            )
         }
 
         // Buscamos los vuelos a partir de la consulta introducida por el usuario
@@ -62,16 +88,17 @@ class SearchViewModel(
             viewModelScope.launch {
                 _searchUiState.update {
                     searchUiState.value.copy(
-                        airportList = flightRepository.getAllAirports().toMutableStateList()
+                        suggestionList = emptyList()
                     )
                 }
-                delay(100)
             }
         } else {
             viewModelScope.launch {
                 flightRepository.getAllAirports(searchQuery).collect { airportList ->
                     _searchUiState.update {
-                        searchUiState.value.copy(airportList = airportList)
+                        searchUiState.value.copy(
+                            suggestionList = airportList
+                        )
                     }
                 }
             }
@@ -89,7 +116,7 @@ class SearchViewModel(
                 searchUiState.value.copy(
                     searchQuery = selectedCode,
                     selectedCode = selectedCode,
-                    airportList = emptyList(),
+                    suggestionList = emptyList(),
                     destinationList = airportsList,
                     departureAirport = flightRepository.getAirportByCode(selectedCode)
                 )
@@ -108,16 +135,4 @@ class SearchViewModel(
         }
     }
 }
-
-data class SearchUiState(
-    val searchQuery: String = "",
-    val selectedCode: String = "",
-    val airportList: List<Airport> = emptyList(),
-    val departureAirport: Airport = Airport(),
-    val destinationList: List<Airport> = emptyList()
-)
-
-data class FavoriteUiState(
-    val favoriteList: List<Favorite> = emptyList()
-)
 

@@ -5,7 +5,7 @@ import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 import kotlinx.coroutines.flow.Flow
 
 interface FlightRepository {
-    suspend fun getAllAirports(): List<Airport>
+    fun getAllAirports(): Flow<List<Airport>>
     fun getAllAirports(query: String): Flow<List<Airport>>
     suspend fun getAirportByCode(code: String): Airport
     suspend fun getAllAirportsNoCode(code: String): List<Airport>
