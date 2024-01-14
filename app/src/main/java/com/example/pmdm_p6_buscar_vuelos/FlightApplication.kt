@@ -9,22 +9,38 @@ import com.example.pmdm_p6_buscar_vuelos.data.datastore.UserPreferencesRepositor
 import com.example.pmdm_p6_buscar_vuelos.di.AppContainer
 import com.example.pmdm_p6_buscar_vuelos.di.AppDataContainer
 
+/**
+ * Nombre del archivo de preferencias de la aplicación.
+ */
 private const val LAYOUT_PREFERENCE_NAME = "layout_preferences"
+
+/**
+ * DataStore utilizado para almacenar preferencias de la aplicación.
+ */
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
     name = LAYOUT_PREFERENCE_NAME
 )
 
+/**
+ * Clase [FlightApplication] que representa la aplicación de Android.
+ *
+ * Esta clase extiende [Application] y se utiliza para realizar inicializaciones globales.
+ */
 class FlightApplication : Application() {
-
-    /**
-     * AppContainer instance used by the rest of classes to obtain dependencies
-     */
+    // Instancia de [AppContainer] utilizada por el resto de las clases para obtener dependencias
     lateinit var container: AppContainer
 
+    // Repositorio de preferencias del usuario que se utiliza para gestionar las preferencias de la aplicación
     lateinit var userPreferencesRepository: UserPreferencesRepository
 
+    /**
+     * Método llamado cuando la aplicación se está iniciando.
+     * Se encarga de realizar las inicializaciones necesarias.
+     */
     override fun onCreate() {
         super.onCreate()
+
+        // Inicialización del contenedor de la aplicación y del repositorio de preferencias del usuario
         container = AppDataContainer(this)
         userPreferencesRepository = UserPreferencesRepository(dataStore)
     }

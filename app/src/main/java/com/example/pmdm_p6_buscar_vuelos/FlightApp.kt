@@ -20,6 +20,9 @@ import com.example.pmdm_p6_buscar_vuelos.ui.AppViewModelProvider
 import com.example.pmdm_p6_buscar_vuelos.ui.screen.SearchScreen
 import com.example.pmdm_p6_buscar_vuelos.ui.screen.SearchViewModel
 
+/**
+ * Función que representa la estructura principal de la aplicación.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlightApp() {
@@ -40,11 +43,15 @@ fun FlightApp() {
         }
     )
     {
+        // Obtenemos contexto de la aplicación
         val context = LocalContext.current
+        // Obtenemos administrador del foco de la aplicación
         val focusManager = LocalFocusManager.current
 
+        // Instancia del ViewModel utilizado para gestionar la aplicación
         val viewModel: SearchViewModel = viewModel(factory = AppViewModelProvider.Factory)
 
+        // Pantalla de búsqueda de vuelos con los distintos eventos asociados
         SearchScreen(
             modifier = Modifier.padding(it),
             onQueryChanged = { query ->
@@ -61,18 +68,17 @@ fun FlightApp() {
                 viewModel.onFavoriteClicked(depCode, destCode)
             },
             onShareButtonClicked = { summary: String ->
-                shareFlight(context, summary = summary)  // compartimos la información
+                shareFlight(context, summary = summary)
             }
         )
     }
 }
 
-
 /**
- * Función que permite compartir la información de un lugar a otra aplicación.
+ * Función que permite compartir la información de un vuelo a otra aplicación.
  *
- * @param context contexto de la aplicación
- * @param summary resumen del vuelo que se quiere compartir
+ * @param context Contexto de la aplicación.
+ * @param summary Resumen del vuelo que se quiere compartir.
  */
 private fun shareFlight(
     context: Context,
