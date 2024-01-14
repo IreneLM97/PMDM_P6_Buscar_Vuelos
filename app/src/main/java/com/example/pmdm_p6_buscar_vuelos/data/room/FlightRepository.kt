@@ -1,11 +1,11 @@
-package com.example.pmdm_p6_buscar_vuelos.data
+package com.example.pmdm_p6_buscar_vuelos.data.room
 
 import com.example.pmdm_p6_buscar_vuelos.model.Airport
 import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Interfaz que define las operaciones disponibles para interactuar con la base de datos.
+ * Interfaz que define las operaciones disponibles para interactuar con la base de datos Room.
  */
 interface FlightRepository {
     /**
@@ -22,22 +22,6 @@ interface FlightRepository {
      * @return Flujo de lista de objetos Airport.
      */
     fun getAllAirports(query: String): Flow<List<Airport>>
-
-    /**
-     * Obtiene un aeropuerto dado su código IATA.
-     *
-     * @param code Código IATA del aeropuerto.
-     * @return Objeto Airport.
-     */
-    suspend fun getAirportByCode(code: String): Airport
-
-    /**
-     * Obtiene todos los aeropuertos excepto el que tiene el código IATA proporcionado.
-     *
-     * @param code Código IATA del aeropuerto a excluir.
-     * @return Lista de objetos Airport.
-     */
-    suspend fun getAllAirportsNoCode(code: String): List<Airport>
 
     /**
      * Obtiene todos los favoritos ordenados por id.

@@ -1,10 +1,10 @@
-package com.example.pmdm_p6_buscar_vuelos.data
+package com.example.pmdm_p6_buscar_vuelos.data.datastore
 
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
-import com.example.pmdm_p6_buscar_vuelos.data.UserPreferencesKeys.SEARCH_VALUE
-import com.example.pmdm_p6_buscar_vuelos.data.UserPreferencesKeys.TAG
+import com.example.pmdm_p6_buscar_vuelos.data.datastore.UserPreferencesKeys.SEARCH_VALUE
+import com.example.pmdm_p6_buscar_vuelos.data.datastore.UserPreferencesKeys.TAG
 import kotlinx.coroutines.flow.*
 import java.io.IOException
 

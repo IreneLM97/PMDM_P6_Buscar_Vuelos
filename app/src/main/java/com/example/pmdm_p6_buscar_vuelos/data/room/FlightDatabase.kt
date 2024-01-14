@@ -1,4 +1,4 @@
-package com.example.pmdm_p6_buscar_vuelos.data
+package com.example.pmdm_p6_buscar_vuelos.data.room
 
 import android.content.Context
 import androidx.room.Database

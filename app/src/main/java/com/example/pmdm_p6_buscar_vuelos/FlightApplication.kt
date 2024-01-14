@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.example.pmdm_p6_buscar_vuelos.data.UserPreferencesRepository
+import com.example.pmdm_p6_buscar_vuelos.data.datastore.UserPreferencesRepository
 import com.example.pmdm_p6_buscar_vuelos.di.AppContainer
 import com.example.pmdm_p6_buscar_vuelos.di.AppDataContainer
 

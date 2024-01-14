@@ -1,9 +1,9 @@
 package com.example.pmdm_p6_buscar_vuelos.di
 
 import android.content.Context
-import com.example.pmdm_p6_buscar_vuelos.data.FlightDatabase
-import com.example.pmdm_p6_buscar_vuelos.data.FlightRepository
-import com.example.pmdm_p6_buscar_vuelos.data.OfflineFlightRepository
+import com.example.pmdm_p6_buscar_vuelos.data.room.FlightDatabase
+import com.example.pmdm_p6_buscar_vuelos.data.room.FlightRepository
+import com.example.pmdm_p6_buscar_vuelos.data.room.OfflineFlightRepository
 
 /**
  * Interfaz que define las dependencias de la aplicación.

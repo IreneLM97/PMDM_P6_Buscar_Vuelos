@@ -9,8 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -19,8 +17,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pmdm_p6_buscar_vuelos.ui.AppViewModelProvider
-import com.example.pmdm_p6_buscar_vuelos.ui.search.SearchScreen
-import com.example.pmdm_p6_buscar_vuelos.ui.search.SearchViewModel
+import com.example.pmdm_p6_buscar_vuelos.ui.screen.SearchScreen
+import com.example.pmdm_p6_buscar_vuelos.ui.screen.SearchViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,25 +44,23 @@ fun FlightApp() {
         val focusManager = LocalFocusManager.current
 
         val viewModel: SearchViewModel = viewModel(factory = AppViewModelProvider.Factory)
-        val searchUiState = viewModel.searchUiState.collectAsState().value
-        val favoriteUiState by viewModel.favoriteUiState.collectAsState()
 
         SearchScreen(
             modifier = Modifier.padding(it),
             onQueryChanged = { query ->
-                viewModel.updateSelectedCode("")
+                viewModel.updateSelectedAirport(null)
                 viewModel.onQueryChanged(query)
                 if(query.isEmpty()) focusManager.clearFocus()
             },
-            onCodeClicked = { code ->
-                viewModel.updateSelectedCode(code)
-                viewModel.onCodeClicked(code)
+            onAirportClicked = { airport ->
+                viewModel.updateSelectedAirport(airport)
+                viewModel.onAirportClicked(airport)
                 focusManager.clearFocus()
             },
             onFavoriteClicked = { depCode, destCode ->
                 viewModel.onFavoriteClicked(depCode, destCode)
             },
-            onSendButtonClicked = { summary: String ->
+            onShareButtonClicked = { summary: String ->
                 shareFlight(context, summary = summary)  // compartimos la información
             }
         )

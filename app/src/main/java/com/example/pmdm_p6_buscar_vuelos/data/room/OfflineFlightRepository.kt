@@ -1,4 +1,4 @@
-package com.example.pmdm_p6_buscar_vuelos.data
+package com.example.pmdm_p6_buscar_vuelos.data.room
 
 import com.example.pmdm_p6_buscar_vuelos.model.Airport
 import com.example.pmdm_p6_buscar_vuelos.model.Favorite
@@ -12,20 +12,13 @@ import kotlinx.coroutines.flow.Flow
 class OfflineFlightRepository(
     private val flightDao: FlightDao
 ) : FlightRepository {
+
     override fun getAllAirports(): Flow<List<Airport>> {
         return flightDao.getAllAirports()
     }
 
     override fun getAllAirports(query: String): Flow<List<Airport>> {
         return flightDao.getAllAirports(query)
-    }
-
-    override suspend fun getAirportByCode(code: String): Airport {
-        return flightDao.getAirportByCode(code)
-    }
-
-    override suspend fun getAllAirportsNoCode(code: String): List<Airport> {
-        return flightDao.getAllAirportsNoCode(code)
     }
 
     override fun getAllFavorites(): Flow<List<Favorite>> {

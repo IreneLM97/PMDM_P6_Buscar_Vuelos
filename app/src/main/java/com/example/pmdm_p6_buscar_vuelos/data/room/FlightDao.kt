@@ -1,4 +1,4 @@
-package com.example.pmdm_p6_buscar_vuelos.data
+package com.example.pmdm_p6_buscar_vuelos.data.room
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -10,7 +10,7 @@ import com.example.pmdm_p6_buscar_vuelos.model.Favorite
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Data Access Object (DAO) para interactuar con la base de datos.
+ * Data Access Object (DAO) para interactuar con la base de datos Room.
  */
 @Dao
 interface FlightDao {
@@ -19,12 +19,6 @@ interface FlightDao {
 
     @Query("SELECT * FROM airport WHERE iata_code = :query OR name LIKE '%' || :query || '%' ORDER BY passengers DESC")
     fun getAllAirports(query: String): Flow<List<Airport>>
-
-    @Query("SELECT * FROM airport WHERE iata_code = :code")
-    suspend fun getAirportByCode(code: String): Airport
-
-    @Query("SELECT * FROM airport WHERE iata_code != :code ORDER BY id ASC")
-    suspend fun getAllAirportsNoCode(code: String): List<Airport>
 
     @Query("SELECT * FROM favorite ORDER BY id DESC")
     fun getAllFavorites(): Flow<List<Favorite>>
