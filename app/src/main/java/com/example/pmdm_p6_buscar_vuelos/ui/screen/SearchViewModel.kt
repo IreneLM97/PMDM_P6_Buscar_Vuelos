@@ -6,6 +6,7 @@ import com.example.pmdm_p6_buscar_vuelos.data.room.FlightRepository
 import com.example.pmdm_p6_buscar_vuelos.data.datastore.UserPreferencesRepository
 import com.example.pmdm_p6_buscar_vuelos.model.Airport
 import com.example.pmdm_p6_buscar_vuelos.model.Favorite
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -29,16 +30,6 @@ class SearchViewModel(
     private val _searchUiState = MutableStateFlow(SearchUiState())
     val searchUiState = _searchUiState.asStateFlow()
 
-    // Inicialización del ViewModel
-    init {
-        // Observamos los cambios en las preferencias del usuario
-        viewModelScope.launch {
-            userPreferencesRepository.userPreferences.collect {
-                searchFromQuery(it.searchValue)
-            }
-        }
-    }
-
     // Flujo de datos para la lista de favoritos
     val favoriteList: StateFlow<List<Favorite>> =
         flightRepository.getAllFavorites()
@@ -57,6 +48,26 @@ class SearchViewModel(
                 initialValue = emptyList()
             )
 
+    // Inicialización del ViewModel
+    init {
+        viewModelScope.launch {
+            // Observamos los cambios en las preferencias del usuario
+            userPreferencesRepository.userPreferences.collect {
+                searchFromQuery(it.searchValue)
+                // Comprobamos si se han cargado los datos
+                checkLoadingStatus()
+            }
+        }
+    }
+
+    /**
+     * Función para verificar si se ha cargado la información de la base de datos y actualizar isLoading.
+     */
+    private suspend fun checkLoadingStatus() {
+        delay(500)  // delay para mostrar icono de cargando
+        _searchUiState.update { it.copy(isLoading = airportList.value.isEmpty()) }
+    }
+
     /**
      * Función que se ejecuta cuando cambia la consulta de búsqueda.
      *
@@ -65,9 +76,7 @@ class SearchViewModel(
     fun onQueryChanged(searchQuery: String) {
         // Actualizamos preferencias del usuario
         viewModelScope.launch {
-            userPreferencesRepository.saveUserPreferences(
-                searchValue = searchQuery
-            )
+            userPreferencesRepository.saveUserPreferences(searchValue = searchQuery)
         }
 
         // Realizamos búsqueda de aeropuertos a partir de la consulta
@@ -80,10 +89,10 @@ class SearchViewModel(
      * @param searchQuery Consulta de búsqueda actual.
      */
     private fun searchFromQuery(searchQuery: String) {
-        // Actualizamos el texto de búsqueda en el estado de la búsqueda
+        // Actualizamos el texto de búsqueda
         _searchUiState.update { it.copy(searchQuery = searchQuery) }
 
-        // Actualizamos la lista de sugerencias de aeropuertos en el estado de la búsqueda
+        // Actualizamos la lista de sugerencias
         viewModelScope.launch {
             if (searchQuery.isEmpty()) {
                 _searchUiState.update { it.copy(suggestionList = emptyList()) }

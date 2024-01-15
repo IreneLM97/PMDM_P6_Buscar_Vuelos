@@ -12,6 +12,7 @@ import com.example.pmdm_p6_buscar_vuelos.ui.AppViewModelProvider
 import com.example.pmdm_p6_buscar_vuelos.ui.components.AirportList
 import com.example.pmdm_p6_buscar_vuelos.ui.components.FavoriteList
 import com.example.pmdm_p6_buscar_vuelos.ui.components.FlightList
+import com.example.pmdm_p6_buscar_vuelos.ui.components.LoadingIcon
 import com.example.pmdm_p6_buscar_vuelos.ui.components.NoFavoriteList
 import com.example.pmdm_p6_buscar_vuelos.ui.components.SearchTextField
 
@@ -51,6 +52,10 @@ fun SearchScreen(
 
         // Mostramos los resultados de la búsqueda en función del estado de la aplicación
         when {
+            // La pantalla está en estado de carga -> Icono de cargando
+            searchUiState.isLoading -> {
+                LoadingIcon()
+            }
             // No hay texto de búsqueda y no hay favoritos -> Mensaje de no favoritos
             searchUiState.searchQuery.isEmpty() && favoriteList.isEmpty() -> {
                 NoFavoriteList()
